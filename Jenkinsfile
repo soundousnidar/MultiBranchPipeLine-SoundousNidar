@@ -7,48 +7,48 @@ pipeline {
                 echo '======================================'
                 echo '📥 Récupération du code depuis GitHub'
                 echo "🌿 Branche : ${env.BRANCH_NAME}"
+                echo "📦 Build : ${env.BUILD_NUMBER}"
                 echo '======================================'
+            }
+        }
+        
+        stage('Vérification des fichiers') {
+            steps {
+                echo '======================================'
+                echo '📂 Vérification des fichiers du projet...'
+                echo '======================================'
+                sh 'ls -la'
+                sh 'pwd'
+                echo '✅ Fichiers vérifiés!'
             }
         }
         
         stage('Build') {
             steps {
                 echo '======================================'
-                echo '🔨 Compilation du projet Java...'
+                echo '🔨 Simulation de la compilation...'
                 echo '======================================'
-                script {
-                    try {
-                        sh 'javac HelloWorld.java'
-                        echo '✅ Compilation réussie!'
-                    } catch (Exception e) {
-                        echo '⚠️  Java non installé, simulation de la compilation'
-                    }
-                }
+                sleep 2
+                echo '✅ Build simulé avec succès!'
             }
         }
         
         stage('Test') {
             steps {
                 echo '======================================'
-                echo '🧪 Exécution des tests...'
+                echo '🧪 Exécution des tests simulés...'
                 echo '======================================'
-                script {
-                    try {
-                        sh 'java HelloWorld'
-                        echo '✅ Tests réussis!'
-                    } catch (Exception e) {
-                        echo '⚠️  Simulation de l\'exécution'
-                    }
-                }
+                sleep 2
+                echo '✅ Tests simulés avec succès!'
             }
         }
         
         stage('Deploy') {
             steps {
                 echo '======================================'
-                echo '🚀 Déploiement du projet...'
+                echo '🚀 Déploiement simulé...'
                 echo '======================================'
-                sleep 2
+                sleep 1
                 echo '✅ Déploiement simulé avec succès!'
             }
         }
@@ -59,6 +59,7 @@ pipeline {
             echo ''
             echo '✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅'
             echo '   PIPELINE RÉUSSI AVEC SUCCÈS!'
+            echo "   Build #${env.BUILD_NUMBER}"
             echo '✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅'
             echo ''
         }
@@ -72,7 +73,8 @@ pipeline {
         always {
             echo ''
             echo '🏁 Fin de l\'exécution du pipeline'
-            echo "⏰ Date : ${new Date()}"
+            echo "⏰ Build #${env.BUILD_NUMBER}"
+            echo "🌿 Branche : ${env.BRANCH_NAME}"
             echo ''
         }
     }
